@@ -1,6 +1,7 @@
 <template>
   <div>
     <h3>Payment</h3>
+    <div v-if="error" class="alert alert-danger">{{ error }}</div>
     <form novalidate @submit.prevent="onSave">
       <div class="row">
         <div class="col-md-6">
@@ -62,8 +63,10 @@ export default {
       postalCode: '12345'
     });
     
+    const error = ref("");
+
     function onSave() {
-      alert("We can't save yet, we don't have an API");
+      error.value = "We can't save yet, we don't have an API";
     }
 
     const zipCode = computed({
@@ -84,7 +87,8 @@ export default {
       states,
       onSave,
       ...formatters,
-      zipCode
+      zipCode,
+      error
     };
   }
 }
