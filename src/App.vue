@@ -7,37 +7,34 @@
           <div><strong>Shipping Information</strong></div>
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" class="form-control" placeholder="Your Name" />
+            <input type="text" id="name" class="form-control" placeholder="Your Name" v-model="payment.fullName" />
           </div>
           <div class="form-group">
             <label for="company">Company Name</label>
-            <input type="text" id="company" class="form-control" placeholder="Your Company" />
+            <input type="text" id="company" class="form-control" placeholder="Your Company" v-model="payment.company" />
           </div>
           <div class="form-group">
             <label for="address1">Address</label>
-            <input type="text" id="address1" class="form-control" placeholder="Street Address" />
+            <input type="text" id="address1" class="form-control" placeholder="Street Address" v-model="payment.address1"/>
           </div>
           <div class="form-group">
             <label for="address2">Suite / Apartment #</label>
-            <input type="text" id="address2" class="form-control" placeholder="" />
+            <input type="text" id="address2" class="form-control" placeholder="" v-model="payment.address2"/>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="cityTown">City</label>
-              <input type="text" id="cityTown" class="form-control" placeholder="e.g New York" />
+              <input type="text" id="cityTown" class="form-control" placeholder="e.g New York" v-model="payment.cityTown"/>
             </div>
               <div class="form-group col-md-3">
               <label for="stateProvince">State</label>
-              <select id="stateProvince" class="form-control">
-                <option value="GA">GA</option>
-                <option value="CA">CA</option>
-                <option value="FL">FL</option>
-                <option value="AL">AL</option>
+              <select id="stateProvince" class="form-control" v-model="payment.stateProvince">
+                <option v-for="state in states" :key="state.abbreviation" :value="state.abbreviation">{{ state.name }}</option>
               </select>
             </div>
             <div class="form-group col-md-3">
               <label for="postalCode">ZipCode</label>
-              <input type="text" id="postalCode" class="form-control" placeholder="e.g 1010" />
+              <input type="text" id="postalCode" class="form-control" placeholder="e.g 1010" v-model="payment.postalCode"/>
             </div>
             <div class="form-group">
               <input type="submit" value="Next" class="btn btn-success" />
@@ -49,5 +46,24 @@
         </div>
       </div>
     </form>
+    <div><pre>{{ payment }}</pre></div>
   </div>
 </template>
+<script>
+import { ref } from "vue";
+import states from "@/lookup/states";
+
+export default {
+  setup() {
+    const payment = ref({
+      fullName: 'Abhishek',
+      postalCode: '12345'
+    });
+    
+    return {
+      payment,
+      states
+    };
+  }
+}
+</script>
