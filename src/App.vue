@@ -29,12 +29,12 @@
               <div class="form-group col-md-3">
               <label for="stateProvince">State</label>
               <select id="stateProvince" class="form-control" v-model="payment.stateProvince">
-                <option v-for="state in states" :key="state.abbreviation" :value="state.abbreviation">{{ state.name }}</option>
+                <option v-for="state in states" :key="state.abbreviation" :value="state.abbreviation">{{ stateFormat(state) }}</option>
               </select>
             </div>
             <div class="form-group col-md-3">
               <label for="postalCode">ZipCode</label>
-              <input type="text" id="postalCode" class="form-control" placeholder="e.g 1010" v-model="payment.postalCode"/>
+              <input type="text" id="postalCode" class="form-control" placeholder="e.g 1010" v-model="zipCode"/>
             </div>
             <div class="form-group">
               <input type="submit" value="Next" class="btn btn-success" />
@@ -50,8 +50,9 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import states from "@/lookup/states";
+import formatters from "@/formatters";
 
 export default {
   setup() {
@@ -64,11 +65,26 @@ export default {
     function onSave() {
       alert("We can't save yet, we don't have an API");
     }
+
+    const zipCode = computed({
+      get: () => payment.value.postalCode,
+      set: (val) => {
+        if (val && typeof val === "string") {
+          if (val.length <= 5 || val.indexOf("-") > -1) {
+            payment.value.postalCode = val;
+          } else {
+            payment.value.postalCode = `${val.substring(0, 5)}-${val.substring(5)}`;
+          }
+        }
+      },
+    });
     
     return {
       payment,
       states,
-      onSave
+      onSave,
+      ...formatters,
+      zipCode
     };
   }
 }
