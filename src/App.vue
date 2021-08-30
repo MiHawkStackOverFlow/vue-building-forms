@@ -72,6 +72,35 @@
               <input type="text" id="postalCode" class="form-control" placeholder="e.g 1010"  v-model="payment.billing.postalCode" :disabled="payment.billing.sameAsShipping" />
             </div>
           </div>  
+          <div><strong>Credit Card</strong></div>
+          <div class="form-group">
+            <label for="ccNumber">Credit Card Number</label>
+            <input class="form-control" type="text" v-model="payment.creditcard.number" id="ccNumber" />
+          </div>
+          <div class="form-group">
+            <label for="nameOnCard">Name on Card</label>
+            <input class="form-control" type="text" v-model="payment.creditcard.nameOnCard" id="nameOnCard" />
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="expirationMonth">Expiration Month</label>
+              <select v-model="payment.creditcard.expirationMonth" class="form-control">
+                <option v-for="m in months" :key="m.number" :value="m.number">
+                  {{ m.name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="expirationYear">Expiration Year</label>
+              <select v-model="payment.creditcard.expirationYear" class="form-control">
+                <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="cvv">CVV Code</label>
+              <input v-model="payment.creditcard.cvv" class="form-control" id="cvv" />
+            </div>
+          </div>  
         </div>
       </div>
     </form>
@@ -82,6 +111,7 @@
 import { ref, computed, watch } from "vue";
 import states from "@/lookup/states";
 import formatters from "@/formatters";
+import months from "@/lookup/months";
 
 export default {
   setup() {
@@ -94,6 +124,7 @@ export default {
       billing: {
         sameAsShipping: false,
       },
+      creditcard: {},
     });
     
     const error = ref("");
@@ -129,6 +160,8 @@ export default {
         }
       }
     );
+
+    const years = Array.from({ length: 10 }, (_, i) => i + 2020);
     
     return {
       payment,
@@ -136,7 +169,9 @@ export default {
       onSave,
       ...formatters,
       zipCode,
-      error
+      error,
+      months,
+      years  
     };
   }
 }
