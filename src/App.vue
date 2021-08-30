@@ -1,5 +1,53 @@
 <template>
-<div class="row">
-  <h3>Payment</h3>
-</div>
+  <div>
+    <h3>Payment</h3>
+    <form novalidate>
+      <div class="row">
+        <div class="col-md-6">
+          <div><strong>Shipping Information</strong></div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" class="form-control" placeholder="Your Name" />
+          </div>
+          <div class="form-group">
+            <label for="company">Company Name</label>
+            <input type="text" id="company" class="form-control" placeholder="Your Company" />
+          </div>
+          <div class="form-group">
+            <label for="address1">Address</label>
+            <input type="text" id="address1" class="form-control" placeholder="Street Address" />
+          </div>
+          <div class="form-group">
+            <label for="address2">Suite / Apartment #</label>
+            <input type="text" id="address2" class="form-control" placeholder="" />
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="cityTown">City</label>
+              <input type="text" id="cityTown" class="form-control" placeholder="e.g New York" />
+            </div>
+              <div class="form-group col-md-3">
+              <label for="stateProvince">State</label>
+              <select id="stateProvince" class="form-control">
+                <option value="GA">GA</option>
+                <option value="CA">CA</option>
+                <option value="FL">FL</option>
+                <option value="AL">AL</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="postalCode">ZipCode</label>
+              <input type="text" id="postalCode" class="form-control" placeholder="e.g 1010" />
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Next" class="btn btn-success" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div><strong>Billing Information</strong></div>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
