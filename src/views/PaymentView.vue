@@ -1,7 +1,6 @@
 <template>
   <div>
     <h3>Payment</h3>
-    <Error :message="error" />
     <form novalidate @submit.prevent="onSave">
       <div class="row">
         <div class="col-md-6">
@@ -70,12 +69,12 @@ import { ref, computed, watch } from "vue";
 import states from "@/lookup/states";
 import formatters from "@/formatters";
 import months from "@/lookup/months";
-import Error from "@/components/Error";
 import AddressView from "./AddressView";
 
 export default {
-  components: { Error, AddressView },
-  setup() {  
+  components: { AddressView },
+  emits: [ "onError" ],
+  setup(props, { emit }) {  
     const payment = ref({
       shipping: {
         fullName: "Shawn",
@@ -86,11 +85,9 @@ export default {
       },
       creditcard: {},
     });
-    
-    const error = ref("");
 
     function onSave() {
-      error.value = "We can't save yet, we don't have an API";
+      emit("onError", "We can't save yet, we don't have an API");
     }
 
     const zipCode = computed({
@@ -129,7 +126,6 @@ export default {
       onSave,
       ...formatters,
       zipCode,
-      error,
       months,
       years  
     };
