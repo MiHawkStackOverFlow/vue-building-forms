@@ -14,29 +14,8 @@
             <label for="company">Company Name</label>
             <input type="text" id="company" class="form-control" placeholder="Your Company" v-model="payment.shipping.company" />
           </div>
-          <div class="form-group">
-            <label for="address1">Address</label>
-            <input type="text" id="address1" class="form-control" placeholder="Street Address" v-model="payment.shipping.address1" />
-          </div>
-          <div class="form-group">
-            <label for="address2">Suite / Apartment #</label>
-            <input type="text" id="address2" class="form-control" placeholder="" v-model="payment.shipping.address2" />
-          </div>
+          <Address-View :address="payment.shipping" />
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="cityTown">City</label>
-              <input type="text" id="cityTown" class="form-control" placeholder="e.g New York" v-model="payment.shipping.cityTown"/>
-            </div>
-              <div class="form-group col-md-3">
-              <label for="stateProvince">State</label>
-              <select id="stateProvince" class="form-control" v-model="payment.shipping.stateProvince">
-                <option v-for="state in states" :key="state.abbreviation" :value="state.abbreviation">{{ stateFormat(state) }}</option>
-              </select>
-            </div>
-            <div class="form-group col-md-3">
-              <label for="postalCode">ZipCode</label>
-              <input type="text" id="postalCode" class="form-control" placeholder="e.g 1010" v-model="payment.shipping.postalCode" />
-            </div>
             <div class="form-group">
               <input type="submit" value="Next" class="btn btn-success" />
             </div>
@@ -48,30 +27,7 @@
             <input type="checkbox" id="sameAsShipping" class="form-check-input" v-model="payment.billing.sameAsShipping" />
             <label for="sameAsShipping" class="form-check-label">Same As Shipping?</label>
           </div>
-          <div class="form-group">
-            <label for="address1">Address</label>
-            <input type="text" id="address1" class="form-control" placeholder="Street Address" v-model="payment.billing.address1" :disabled="payment.billing.sameAsShipping"/>
-          </div>
-          <div class="form-group">
-            <label for="address2">Suite / Apartment #</label>
-            <input type="text" id="address2" class="form-control" placeholder="" v-model="payment.billing.address2" :disabled="payment.billing.sameAsShipping" />
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="cityTown">City</label>
-              <input type="text" id="cityTown" class="form-control" placeholder="e.g New York" v-model="payment.billing.cityTown" :disabled="payment.billing.sameAsShipping" />
-            </div>
-              <div class="form-group col-md-3">
-              <label for="stateProvince">State</label>
-              <select id="stateProvince" class="form-control" v-model="payment.billing.stateProvince" :disabled="payment.billing.sameAsShipping">
-                <option v-for="state in states" :key="state.abbreviation" :value="state.abbreviation">{{ stateFormat(state) }}</option>
-              </select>
-            </div>
-            <div class="form-group col-md-3">
-              <label for="postalCode">ZipCode</label>
-              <input type="text" id="postalCode" class="form-control" placeholder="e.g 1010"  v-model="payment.billing.postalCode" :disabled="payment.billing.sameAsShipping" />
-            </div>
-          </div>  
+          <Address-View :address="payment.billing" :isDisabled="payment.billing.sameAsShipping"/>
           <div><strong>Credit Card</strong></div>
           <div class="form-group">
             <label for="ccNumber">Credit Card Number</label>
@@ -113,9 +69,10 @@ import states from "@/lookup/states";
 import formatters from "@/formatters";
 import months from "@/lookup/months";
 import Error from "@/components/Error";
+import AddressView from "./AddressView";
 
 export default {
-  components: { Error },
+  components: { Error, AddressView },
   setup() {  
     const payment = ref({
       shipping: {
