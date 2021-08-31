@@ -1,6 +1,6 @@
 <template>
   <div>
-    <payment-view />    
+    <Payment-View />    
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>Payment</h3>
-    <div v-if="error" class="alert alert-danger">{{ error }}</div>
+    <Error :message="error" />
     <form novalidate @submit.prevent="onSave">
       <div class="row">
         <div class="col-md-6">
@@ -112,10 +112,11 @@ import { ref, computed, watch } from "vue";
 import states from "@/lookup/states";
 import formatters from "@/formatters";
 import months from "@/lookup/months";
+import Error from "@/components/Error";
 
 export default {
-  setup() {
-    
+  components: { Error },
+  setup() {  
     const payment = ref({
       shipping: {
         fullName: "Shawn",
