@@ -6,15 +6,16 @@
       <div class="row">
         <div class="col-md-6">
           <div><strong>Shipping Information</strong></div>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" class="form-control" placeholder="Your Name" v-model="payment.shipping.fullName" />
-          </div>
-          <div class="form-group">
-            <label for="company">Company Name</label>
-            <input type="text" id="company" class="form-control" placeholder="Your Company" v-model="payment.shipping.company" />
-          </div>
-          <Address-View :address="payment.shipping" />
+          <Address-View :address="payment.shipping">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" class="form-control" placeholder="Your Name" v-model="payment.shipping.fullName" />
+            </div>
+            <div class="form-group">
+              <label for="company">Company Name</label>
+              <input type="text" id="company" class="form-control" placeholder="Your Company" v-model="payment.shipping.company" />
+            </div>
+          </Address-View>
           <div class="form-row">
             <div class="form-group">
               <input type="submit" value="Next" class="btn btn-success" />
@@ -23,11 +24,12 @@
         </div>
         <div class="col-md-6">
           <div><strong>Billing Information</strong></div>
-          <div class="form-check">
-            <input type="checkbox" id="sameAsShipping" class="form-check-input" v-model="payment.billing.sameAsShipping" />
-            <label for="sameAsShipping" class="form-check-label">Same As Shipping?</label>
-          </div>
-          <Address-View :address="payment.billing" :isDisabled="payment.billing.sameAsShipping"/>
+          <Address-View :address="payment.billing" :isDisabled="payment.billing.sameAsShipping">
+            <div class="form-check">
+              <input type="checkbox" id="sameAsShipping" class="form-check-input" v-model="payment.billing.sameAsShipping" />
+              <label for="sameAsShipping" class="form-check-label">Same As Shipping?</label>
+            </div>
+          </Address-View>
           <div><strong>Credit Card</strong></div>
           <div class="form-group">
             <label for="ccNumber">Credit Card Number</label>

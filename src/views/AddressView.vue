@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="border rounded p-2">
+    <slot />  
     <div class="form-group">
         <label for="address1">Address</label>
         <input type="text" id="address1" class="form-control" placeholder="Street Address" v-model="address.address1" :disabled="isDisabled"/>
