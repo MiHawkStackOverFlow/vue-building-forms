@@ -16,4 +16,7 @@ Vue Forms
 
 # Vuelidate (validations) :-
 
+1. https://vuelidate.js.org/
+2. https://vuelidate-next.netlify.app/
+
 ![vuelidate](https://user-images.githubusercontent.com/20744146/131635800-2aa36764-37be-467a-9921-c62b9110f192.PNG)
