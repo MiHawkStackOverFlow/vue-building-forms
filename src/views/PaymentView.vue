@@ -17,7 +17,7 @@
           </Address-View>
           <div class="form-row">
             <div class="form-group">
-              <input type="submit" value="Next" class="btn btn-success" />
+              <input type="submit" value="Next" class="btn btn-success" :disabled="creditCardModel.$invalid"/>
             </div>
           </div>
         </div>
@@ -33,10 +33,12 @@
           <div class="form-group">
             <label for="ccNumber">Credit Card Number</label>
             <input class="form-control" type="text" v-model="creditCardModel.number.$model" id="ccNumber" />
+            <ValidationMessage :model="creditCardModel.number" />
           </div>
           <div class="form-group">
             <label for="nameOnCard">Name on Card</label>
             <input class="form-control" type="text" v-model="creditCardModel.nameOnCard.$model" id="nameOnCard" />
+            <ValidationMessage :model="creditCardModel.nameOnCard" />
           </div>
           <div class="form-row">
             <div class="form-group col-md-4">
@@ -46,23 +48,21 @@
                   {{ m.name }}
                 </option>
               </select>
+              <ValidationMessage :model="creditCardModel.expirationMonth" />
             </div>
             <div class="form-group col-md-4">
               <label for="expirationYear">Expiration Year</label>
               <select v-model="creditCardModel.expirationYear.$model" class="form-control">
                 <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
               </select>
+              <ValidationMessage :model="creditCardModel.expirationYear" />
             </div>
             <div class="form-group col-md-4">
               <label for="cvv">CVV Code</label>
               <input v-model="creditCardModel.cvv.$model" class="form-control" id="cvv" />
+              <ValidationMessage :model="creditCardModel.cvv" />
             </div>
           </div>
-          <div class="text-danger" v-if="creditCardModel.$invalid">
-            <ul>
-              <li v-for="error in creditCardModel.$errors" :key="error">{{ `${ error.$property } : ${ error.$message }` }}</li>
-            </ul>
-          </div>  
         </div>
       </div>
     </form>
@@ -81,15 +81,18 @@ import AddressView from "./AddressView";
 import state from "@/state";
 import { required } from "@vuelidate/validators";
 import useVuelidate from '@vuelidate/core';
+import ValidationMessage from "../components/ValidationMessage.vue";
 
 export default {
-  components: { AddressView },
+  components: { AddressView, ValidationMessage },
   emits: [ "onError" ],
   setup(props, { emit }) {  
     const payment = reactive(state);
 
-    function onSave() {
-      state.errorMessage.value = "We can't save yet, we don't have an API";
+    async function onSave() {
+      if (await creditCardModel.value.$validate()) {
+        state.errorMessage.value = "We can't save yet, we don't have an API";
+      }  
     }
 
     const zipCode = computed({
