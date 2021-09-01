@@ -5,62 +5,62 @@
       <div class="row">
         <div class="col-md-6">
           <div><strong>Shipping Information</strong></div>
-          <Address-View :address="payment.shipping">
+          <Address-View :address="model.shipping">
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" id="name" class="form-control" placeholder="Your Name" v-model="payment.shipping.fullName" />
+              <input type="text" id="name" class="form-control" placeholder="Your Name" v-model="model.shipping.fullName.$model" />
             </div>
             <div class="form-group">
               <label for="company">Company Name</label>
-              <input type="text" id="company" class="form-control" placeholder="Your Company" v-model="payment.shipping.company" />
+              <input type="text" id="company" class="form-control" placeholder="Your Company"  v-model="model.shipping.company.$model" />
             </div>
           </Address-View>
           <div class="form-row">
             <div class="form-group">
-              <input type="submit" value="Next" class="btn btn-success" :disabled="creditCardModel.$invalid"/>
+              <input type="submit" value="Next" class="btn btn-success"/>
             </div>
           </div>
         </div>
         <div class="col-md-6">
           <div><strong>Billing Information</strong></div>
-          <Address-View :address="payment.billing" :isDisabled="payment.billing.sameAsShipping">
+          <Address-View :address="model.billing" :isDisabled="model.billing.sameAsShipping.$model">
             <div class="form-check">
-              <input type="checkbox" id="sameAsShipping" class="form-check-input" v-model="payment.billing.sameAsShipping" />
+              <input type="checkbox" id="sameAsShipping" class="form-check-input" v-model="model.billing.sameAsShipping.$model" />
               <label for="sameAsShipping" class="form-check-label">Same As Shipping?</label>
             </div>
           </Address-View>
           <div><strong>Credit Card</strong></div>
           <div class="form-group">
             <label for="ccNumber">Credit Card Number</label>
-            <input class="form-control" type="text" v-model="creditCardModel.number.$model" id="ccNumber" />
-            <ValidationMessage :model="creditCardModel.number" />
+            <input class="form-control" type="text" v-model="model.creditcard.number.$model" id="ccNumber" />
+            <ValidationMessage :model="model.creditcard.number" />
           </div>
           <div class="form-group">
             <label for="nameOnCard">Name on Card</label>
-            <input class="form-control" type="text" v-model="creditCardModel.nameOnCard.$model" id="nameOnCard" />
-            <ValidationMessage :model="creditCardModel.nameOnCard" />
+            <input class="form-control" type="text" v-model="model.creditcard.nameOnCard.$model" id="nameOnCard" />
+            <ValidationMessage :model="model.creditcard.nameOnCard" />
           </div>
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="expirationMonth">Expiration Month</label>
-              <select v-model="creditCardModel.expirationMonth.$model" class="form-control">
+              <select v-model="model.creditcard.expirationMonth.$model" class="form-control">
                 <option v-for="m in months" :key="m.number" :value="m.number">
                   {{ m.name }}
                 </option>
               </select>
-              <ValidationMessage :model="creditCardModel.expirationMonth" />
+              <ValidationMessage :model="model.creditcard.expirationMonth" />
             </div>
             <div class="form-group col-md-4">
               <label for="expirationYear">Expiration Year</label>
-              <select v-model="creditCardModel.expirationYear.$model" class="form-control">
+              <select v-model="model.creditcard.expirationYear.$model" class="form-control">
                 <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
               </select>
-              <ValidationMessage :model="creditCardModel.expirationYear" />
+              <ValidationMessage :model="model.creditcard.expirationYear" />
             </div>
             <div class="form-group col-md-4">
               <label for="cvv">CVV Code</label>
-              <input v-model="creditCardModel.cvv.$model" class="form-control" id="cvv" />
-              <ValidationMessage :model="creditCardModel.cvv" />
+              <input  v-model="model.creditcard.cvv.$model" class="form-control" id="cvv" />
+              <ValidationMessage :model="model.creditcard.cvv" />
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
     </form>
     <div>
       <pre>{{ payment }}</pre>
-      <pre>{{ creditCardModel }}</pre>
+      <pre>{{ model }}</pre>
     </div>
   </div>
 </template>
@@ -91,7 +91,7 @@ export default {
     const payment = reactive(state);
 
     async function onSave() {
-      if (await creditCardModel.value.$validate()) {
+      if (await model.value.$validate()) {
         state.errorMessage.value = "We can't save yet, we don't have an API";
       }  
     }
@@ -129,7 +129,7 @@ export default {
        cvv : { required }
     };
     
-    const creditCardModel = useVuelidate(rules, state.creditcard);
+    const model = state.toModel();
 
     return {
       payment,
@@ -139,7 +139,7 @@ export default {
       zipCode,
       months,
       years,
-      creditCardModel
+      model
     };
   }
 }
