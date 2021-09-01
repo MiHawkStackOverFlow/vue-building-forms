@@ -13,3 +13,7 @@ Vue Forms
 # model Binding in Vue :-
 
 ![Model Binding](https://user-images.githubusercontent.com/20744146/131361281-f06762ff-8cf9-41f0-8154-12ed84c6f905.PNG)
+
+# Vuelidate (validations) :-
+
+![vuelidate](https://user-images.githubusercontent.com/20744146/131635800-2aa36764-37be-467a-9921-c62b9110f192.PNG)
